@@ -1,2 +1,2 @@
 export * from './hooks/useLoop'
-export * from './hooks/useZeroOne'
+export * from './hooks/useSwitch'
