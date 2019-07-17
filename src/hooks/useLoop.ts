@@ -3,7 +3,7 @@ import Animated, { Easing } from 'react-native-reanimated'
 import { LoopState } from '../enums'
 import { pauseTiming, resumeTiming } from '../utils/timing'
 
-const { cond, eq, and, block, set, clockRunning, Clock, Value, timing } = Animated
+const { cond, eq, and, block, set, clockRunning, Clock, Value, timing, useCode } = Animated
 
 export interface UseLoopZeroOneProps {
   animating?: Animated.Value<LoopState>
@@ -25,7 +25,7 @@ export const useLoop = ({
   max = 1,
   position,
 }: UseLoopZeroOneProps = {}) => {
-  const animation = useMemo(() => {
+  const [animation, loopAnimation] = useMemo(() => {
     const isAnimating = animating || new Value<LoopState>(1)
     const state = {
       finished: new Value(0),
@@ -48,7 +48,7 @@ export const useLoop = ({
 
     const clock = new Clock()
 
-    const value = block([
+    const _loopAnimation = block([
       cond(and(state.finished, eq(state.position, max)), reset),
       cond(
         clockRunning(clock),
@@ -56,15 +56,16 @@ export const useLoop = ({
         cond(isAnimating, resumeTiming(clock, state, config, max)),
       ),
       timing(clock, state, config),
-      state.position,
     ])
 
     const start = () => isAnimating.setValue(LoopState.animate)
 
     const stop = () => isAnimating.setValue(LoopState.pause)
 
-    return { value, start, stop, position }
+    return [{ start, stop, position: state.position, clock }, _loopAnimation]
   }, [animating, interval, easing, min, max, position])
+
+  useCode(loopAnimation, [loopAnimation])
 
   return animation
 }
