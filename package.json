@@ -12,9 +12,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/ken0x0a/react-native-reanimated-hook.git"
+    "url": "https://github.com/ken0x0a/react-native-reanimated-hooks.git"
   },
-  "homepage": "https://github.com/ken0x0a/react-native-reanimated-hook#readme",
+  "homepage": "https://github.com/ken0x0a/react-native-reanimated-hooks#readme",
   "author": "ken0x0a+117117@gmail.com",
   "license": "MIT",
   "prettier": "@ken0x0a/prettier-config",
@@ -38,6 +38,8 @@
     "@ken0x0a/tsconfig": "^1.0.0",
     "@ken0x0a/tslint-config": "^1.0.0",
     "@react-native-community/bob": "0.6.1",
+    "react": "16.8.6",
+    "react-native-reanimated": "1.1.0",
     "semantic-release": "^15.13.18",
     "typescript": "3.5.3"
   },
