@@ -12,8 +12,7 @@
 /node_modules
 
 # production
-/build
-/public/assets
+/lib
 
 # misc
 .env.local

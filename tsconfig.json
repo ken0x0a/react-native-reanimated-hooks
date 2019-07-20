@@ -1,3 +1,6 @@
 {
-  "extends": "@ken0x0a/tsconfig"
+  "extends": "@ken0x0a/tsconfig",
+  "compilerOptions": {
+    "noEmit": false
+  }
 }
