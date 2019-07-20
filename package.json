@@ -1,16 +1,24 @@
 {
   "name": "react-native-reanimated-hooks",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "react hooks for react-native-reanimated",
   "main": "src/index.ts",
+  "files": [
+    "src/*"
+  ],
   "author": "ken0x0a+117117@gmail.com",
   "license": "MIT",
   "private": true,
-  "prettier": "prettier-config-ken0x0a",
+  "prettier": "@ken0x0a/prettier-config",
   "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
     "react-native-reanimated": "^1.0.0"
   },
   "devDependencies": {
-    "prettier-config-ken0x0a": "^1.0.0"
+    "@ken0x0a/eslint-config": "^1.0.2",
+    "@ken0x0a/prettier-config": "^1.0.0",
+    "@ken0x0a/tsconfig": "^1.0.0",
+    "@ken0x0a/tslint-config": "^1.0.0"
   }
 }
