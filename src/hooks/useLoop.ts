@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react'
 import Animated, { Easing } from 'react-native-reanimated'
-import { LoopState } from '../enums'
+import { ReanimatedLoopState as LoopState } from '../enums'
 import { pauseTiming, resumeTiming } from '../utils/timing'
 
 const { cond, eq, and, block, set, clockRunning, Clock, Value, timing, useCode } = Animated
@@ -19,7 +19,7 @@ export interface UseLoopOptions {
 }
 export const useLoop = ({
   animating,
-  interval = 1200,
+  interval = 1000,
   easing = Easing.linear,
   min = 0,
   max = 1,
