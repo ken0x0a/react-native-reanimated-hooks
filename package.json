@@ -1,6 +1,6 @@
 {
   "name": "react-native-reanimated-hooks",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "react hooks for react-native-reanimated",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -10,13 +10,19 @@
     "lib/",
     "src/"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ken0x0a/react-native-reanimated-hook.git"
+  },
+  "homepage": "https://github.com/ken0x0a/react-native-reanimated-hook#readme",
   "author": "ken0x0a+117117@gmail.com",
   "license": "MIT",
   "private": true,
   "prettier": "@ken0x0a/prettier-config",
   "scripts": {
     "prepare": "bob build",
-    "tsw": "tsc --noEmit --watch"
+    "tsw": "tsc --noEmit --watch",
+    "semantic-release": "semantic-release"
   },
   "peerDependencies": {
     "react": "*",
@@ -29,6 +35,7 @@
     "@ken0x0a/tsconfig": "^1.0.0",
     "@ken0x0a/tslint-config": "^1.0.0",
     "@react-native-community/bob": "0.6.1",
+    "semantic-release": "^15.13.18",
     "typescript": "3.5.3"
   },
   "@react-native-community/bob": {
