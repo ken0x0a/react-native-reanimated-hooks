@@ -20,6 +20,10 @@
   "private": true,
   "prettier": "@ken0x0a/prettier-config",
   "scripts": {
+    "lint": "eslint --ext .ts,.tsx --report-unused-disable-directives . --cache",
+    "type-check": "tsc --noEmit",
+    "type-check-ci": "tsc --incremental --outDir './build'",
+    "test": "yarn run type-check && yarn run lint",
     "prepare": "bob build",
     "tsw": "tsc --noEmit --watch",
     "semantic-release": "semantic-release"
