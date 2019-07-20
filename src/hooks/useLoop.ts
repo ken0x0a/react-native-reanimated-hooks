@@ -5,14 +5,14 @@ import { pauseTiming, resumeTiming } from '../utils/timing'
 
 const { cond, eq, and, block, set, clockRunning, Clock, Value, timing, useCode } = Animated
 
-export interface UseLoopZeroOneProps {
+export interface UseLoopOptions {
   animating?: Animated.Value<LoopState>
   easing?: Animated.EasingFunction
   interval?: number
   max?: number
   min?: number
   /**
-   * UseLoopZeroOneProps['position']
+   * UseLoopOptions['position']
    * `position` for `animation.state`
    */
   position?: Animated.Value<number>
@@ -24,7 +24,7 @@ export const useLoop = ({
   min = 0,
   max = 1,
   position,
-}: UseLoopZeroOneProps = {}) => {
+}: UseLoopOptions = {}) => {
   const [animation, loopAnimation] = useMemo(() => {
     const isAnimating = animating || new Value<LoopState>(1)
     const state = {
