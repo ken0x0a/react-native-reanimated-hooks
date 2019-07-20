@@ -38,6 +38,7 @@
     "@ken0x0a/tsconfig": "^1.0.0",
     "@ken0x0a/tslint-config": "^1.0.0",
     "@react-native-community/bob": "0.6.1",
+    "@types/react": "16.8.23",
     "react": "16.8.6",
     "react-native-reanimated": "1.1.0",
     "semantic-release": "^15.13.18",
