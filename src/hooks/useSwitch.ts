@@ -6,9 +6,9 @@ const { cond, block, clockRunning, startClock, stopClock, Clock, Value, timing, 
 export interface UseSwitchProps {
   duration?: number
   easing?: Animated.EasingFunction
-  position?: Animated.Value<number>
   max?: number
   min?: number
+  position?: Animated.Value<number>
   // animateOnInit?: boolean
 }
 /**
@@ -23,7 +23,7 @@ export const useSwitch = ({
   min = 0,
   max = 1,
 }: UseSwitchProps = {}) => {
-  const [animationSwitch, _animation] = useMemo(() => {
+  const [animationSwitch, animation] = useMemo(() => {
     const state = {
       finished: new Value(0),
       position: position || new Value(min),
@@ -49,9 +49,9 @@ export const useSwitch = ({
     ])
 
     return [{ position: state.position }, _animation]
-  }, [])
+  }, [duration, easing, max, min, position])
 
-  useCode(_animation, [_animation])
+  useCode(animation, [animation])
 
   return animationSwitch
 }
