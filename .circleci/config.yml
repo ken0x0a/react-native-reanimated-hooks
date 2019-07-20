@@ -30,7 +30,8 @@ jobs: # a collection of steps
       - run:
           name: Install Dependencies
           # `--frozen-lockfile` https://yarnpkg.com/lang/en/docs/cli/install/
-          command: yarn install --frozen-lockfile
+          # command: yarn install --frozen-lockfile
+          command: yarn install
       - save_cache:
           # name: Save Yarn Package Cache
           key: yarn-packages-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
