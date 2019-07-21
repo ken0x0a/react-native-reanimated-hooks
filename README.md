@@ -52,9 +52,11 @@ export const Example: React.FC<ExampleProps> = () => {
 ```
 
 The loop is the following
+
 ![this](./docs/assets/this.gif)
 
 **NOT** following
+
 ![not-this](./docs/assets/not-this.gif)
 
 Loop animated values as indicated by name.
