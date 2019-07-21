@@ -69,6 +69,9 @@ export const useLoop = ({
       timing(clock, state, config),
     ])
 
+    /**
+     * MAY BE REMOVED (split to another utility function) IN FUTURE `start`, `stop`, `toggle`, `isAnimating`
+     */
     const start = () => {
       isAnimatingAnimVal.setValue(LoopState.animate)
       isAnimating.current = true
@@ -79,7 +82,9 @@ export const useLoop = ({
       isAnimating.current = false
     }
 
-    return [{ start, stop, position: state.position, clock, isAnimating }, _loopAnimation]
+    const toggle = () => (isAnimating.current ? stop() : start())
+
+    return [{ start, stop, toggle, position: state.position, clock, isAnimating }, _loopAnimation]
   }, [animating, interval, easing, min, max, position])
 
   useCode(loopAnimation, [loopAnimation])
