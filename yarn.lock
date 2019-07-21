@@ -564,10 +564,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@ken0x0a/eslint-config@^1.0.2":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@ken0x0a/eslint-config/-/eslint-config-1.0.3.tgz#323f440195d1b43d7b044980d1b61ae93de75490"
-  integrity sha512-WW18oRh3HDhJZZte/aSkWR5H5CqlbUCEAI0naYCnX1+A0JR/7jz1CHPLX9snC0+h7RzhWIjwHH9pO4zK+ZJtdA==
+"@ken0x0a/eslint-config@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@ken0x0a/eslint-config/-/eslint-config-2.0.0.tgz#07d432cbe60c1a114db2bce6e867fed58666170e"
+  integrity sha512-ErWVpLbs/7O5dhqIMdL9sVM6+A9TTArZ28hnJPIEYFBjQ2Ww8c1/DvFswWvC7SKfOHaRGqMQsLlwj7WocPvkoQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "1.12.0"
     "@typescript-eslint/eslint-plugin-tslint" "1.12.0"
