@@ -5,6 +5,15 @@ import { pauseTiming, resumeTiming } from '../utils/timing'
 
 const { cond, eq, and, block, set, clockRunning, Clock, Value, timing, useCode } = Animated
 
+export interface UseLoopResult {
+  clock: Animated.Clock
+  isAnimating: {
+    current: boolean
+  }
+  position: Animated.Value<number>
+  start: () => void
+  stop: () => void
+}
 export interface UseLoopOptions {
   animating?: Animated.Value<LoopState>
   easing?: Animated.EasingFunction
@@ -24,9 +33,11 @@ export const useLoop = ({
   min = 0,
   max = 1,
   position,
-}: UseLoopOptions = {}) => {
+}: UseLoopOptions = {}): UseLoopResult => {
   const [animation, loopAnimation] = useMemo(() => {
-    const isAnimating = animating || new Value<LoopState>(1)
+    const isAnimatingAnimVal = animating || new Value<LoopState>(1)
+    const isAnimating = { current: true }
+
     const state = {
       finished: new Value(0),
       position: position || new Value<number>(min),
@@ -52,17 +63,23 @@ export const useLoop = ({
       cond(and(state.finished, eq(state.position, max)), reset),
       cond(
         clockRunning(clock),
-        cond(isAnimating, 0, pauseTiming(clock, state, config)),
-        cond(isAnimating, resumeTiming(clock, state, config, max)),
+        cond(isAnimatingAnimVal, 0, pauseTiming(clock, state, config)),
+        cond(isAnimatingAnimVal, resumeTiming(clock, state, config, max)),
       ),
       timing(clock, state, config),
     ])
 
-    const start = () => isAnimating.setValue(LoopState.animate)
+    const start = () => {
+      isAnimatingAnimVal.setValue(LoopState.animate)
+      isAnimating.current = true
+    }
 
-    const stop = () => isAnimating.setValue(LoopState.pause)
+    const stop = () => {
+      isAnimatingAnimVal.setValue(LoopState.pause)
+      isAnimating.current = false
+    }
 
-    return [{ start, stop, position: state.position, clock }, _loopAnimation]
+    return [{ start, stop, position: state.position, clock, isAnimating }, _loopAnimation]
   }, [animating, interval, easing, min, max, position])
 
   useCode(loopAnimation, [loopAnimation])
@@ -70,10 +87,10 @@ export const useLoop = ({
   return animation
 }
 
-interface UseLoopInitialState {
+interface UseLoopStateOptions {
   state?: LoopState
 }
-export function useLoopState({ state = LoopState.animate }: UseLoopInitialState = {}) {
+export function useLoopState({ state = LoopState.animate }: UseLoopStateOptions = {}) {
   const animRef = useRef({
     isAnimating: state === LoopState.animate,
     animValue: new Animated.Value<LoopState>(state),
