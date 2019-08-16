@@ -39,7 +39,7 @@
     "@types/react": "16.8.23",
     "react": "16.8.3",
     "react-native-reanimated": "^1.1.0",
-    "semantic-release": "^15.13.18",
+    "semantic-release": "^15.13.21",
     "typescript": "3.5.3"
   },
   "@react-native-community/bob": {
