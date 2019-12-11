@@ -59,15 +59,17 @@ export const useLoop = ({
 
     const clock = new Clock()
 
-    const _loopAnimation = block([
-      cond(and(state.finished, eq(state.position, max)), reset),
-      cond(
-        clockRunning(clock),
-        cond(isAnimatingAnimVal, 0, pauseTiming(clock, state, config)),
-        cond(isAnimatingAnimVal, resumeTiming(clock, state, config, max)),
-      ),
-      timing(clock, state, config),
-    ])
+    /* eslint-disable @typescript-eslint/explicit-function-return-type */
+    const _loopAnimation = () =>
+      block([
+        cond(and(state.finished, eq(state.position, max)), reset),
+        cond(
+          clockRunning(clock),
+          cond(isAnimatingAnimVal, 0, pauseTiming(clock, state, config)),
+          cond(isAnimatingAnimVal, resumeTiming(clock, state, config, max)),
+        ),
+        timing(clock, state, config),
+      ])
 
     /**
      * MAY BE REMOVED (split to another utility function) IN FUTURE `start`, `stop`, `toggle`, `isAnimating`
@@ -83,6 +85,7 @@ export const useLoop = ({
     }
 
     const toggle = () => (isAnimating.current ? stop() : start())
+    /* eslint-enable @typescript-eslint/explicit-function-return-type */
 
     return [{ start, stop, toggle, position: state.position, clock, isAnimating }, _loopAnimation]
   }, [animating, interval, easing, min, max, position])
@@ -92,10 +95,18 @@ export const useLoop = ({
   return animation
 }
 
+type UseLoopStateResult = {
+  start: () => void
+  state: Animated.Value<LoopState>
+  stop: () => void
+  toggle: () => void
+}
 interface UseLoopStateOptions {
   state?: LoopState
 }
-export function useLoopState({ state = LoopState.animate }: UseLoopStateOptions = {}) {
+export function useLoopState({
+  state = LoopState.animate,
+}: UseLoopStateOptions = {}): UseLoopStateResult {
   const animRef = useRef({
     isAnimating: state === LoopState.animate,
     animValue: new Animated.Value<LoopState>(state),
