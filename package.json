@@ -32,7 +32,7 @@
     "react-native-reanimated": ">2.0.0"
   },
   "devDependencies": {
-    "@ken0x0a/configs": "^2.8.0",
+    "@ken0x0a/configs": "^2.8.1",
     "@ken0x0a/eslint-config-react-deps": "^6.3.0",
     "@react-native-community/bob": "0.17.1",
     "@types/react": "18.0.25",

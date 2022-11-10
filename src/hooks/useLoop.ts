@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useRef } from "react";
-import {
+import Animated, {
   EasingNode as Easing,
   cond,
   eq,
@@ -12,7 +12,6 @@ import {
   timing,
   useCode,
 } from "react-native-reanimated";
-import Animated from "react-native-reanimated";
 import { ReanimatedLoopState as LoopState } from "../enums";
 import { pauseTiming, resumeTiming } from "../utils/timing";
 
@@ -70,7 +69,6 @@ export const useLoop = ({
 
     const clock = new Clock();
 
-    /* eslint-disable @typescript-eslint/explicit-function-return-type */
     const _loopAnimation = () =>
       block([
         cond(and(state.finished, eq(state.position, max)), reset),

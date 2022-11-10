@@ -1,7 +1,17 @@
 import { useMemo } from "react";
-import Animated, { EasingNode as Easing } from "react-native-reanimated";
-
-const { cond, block, clockRunning, startClock, stopClock, Clock, Value, timing, useCode } = Animated;
+import type Animated from "react-native-reanimated";
+import {
+  cond,
+  block,
+  clockRunning,
+  startClock,
+  stopClock,
+  Clock,
+  Value,
+  timing,
+  useCode,
+  EasingNode as Easing,
+} from "react-native-reanimated";
 
 export type UseSwitchResult = {
   position: Animated.Value<number>;
@@ -42,7 +52,6 @@ export const useSwitch = ({
 
     const clock = new Clock();
 
-    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const _animation = () =>
       block([
         cond(
