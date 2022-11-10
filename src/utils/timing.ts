@@ -1,6 +1,6 @@
-import Animated from 'react-native-reanimated'
+import { set, startClock, stopClock } from 'react-native-reanimated'
+import type Animated from 'react-native-reanimated'
 
-const { set, startClock, stopClock } = Animated
 
 export function pauseTiming(
   clock: Animated.Clock,

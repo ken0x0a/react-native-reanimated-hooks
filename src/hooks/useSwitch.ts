@@ -1,17 +1,17 @@
-import { useMemo } from 'react'
-import Animated, { Easing } from 'react-native-reanimated'
+import { useMemo } from "react";
+import Animated, { EasingNode as Easing } from "react-native-reanimated";
 
-const { cond, block, clockRunning, startClock, stopClock, Clock, Value, timing, useCode } = Animated
+const { cond, block, clockRunning, startClock, stopClock, Clock, Value, timing, useCode } = Animated;
 
 export type UseSwitchResult = {
-  position: Animated.Value<number>
-}
+  position: Animated.Value<number>;
+};
 export interface UseSwitchProps {
-  duration?: number
-  easing?: Animated.EasingFunction
-  max?: number
-  min?: number
-  position?: Animated.Value<number>
+  duration?: number;
+  easing?: Animated.EasingNodeFunction;
+  max?: number;
+  min?: number;
+  position?: Animated.Value<number>;
   // animateOnInit?: boolean
 }
 /**
@@ -32,15 +32,15 @@ export const useSwitch = ({
       position: position || new Value(min),
       time: new Value(0),
       frameTime: new Value(0),
-    }
+    };
 
     const config = {
       toValue: new Value(max),
       duration,
       easing,
-    }
+    };
 
-    const clock = new Clock()
+    const clock = new Clock();
 
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const _animation = () =>
@@ -51,12 +51,12 @@ export const useSwitch = ({
           cond(state.finished, 0, startClock(clock)),
         ),
         timing(clock, state, config),
-      ])
+      ]);
 
-    return [{ position: state.position }, _animation]
-  }, [duration, easing, max, min, position])
+    return [{ position: state.position }, _animation];
+  }, [duration, easing, max, min, position]);
 
-  useCode(animation, [animation])
+  useCode(animation, [animation]);
 
-  return animationSwitch
-}
+  return animationSwitch;
+};
