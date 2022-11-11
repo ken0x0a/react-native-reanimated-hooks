@@ -1,5 +1,5 @@
 [![GitHub Action](https://github.com/ken0x0a/react-native-reanimated-hooks/actions/workflows/publish.yml/badge.svg)](https://github.com/ken0x0a/react-native-reanimated-hooks/actions)
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![npm version](https://img.shields.io/npm/v/react-native-reanimated-hooks?color=%234FC73C)](https://www.npmjs.com/package/react-native-reanimated-hooks)
 
 react hooks for "react-native-reanimated"
 
