@@ -1292,14 +1292,14 @@
   optionalDependencies:
     conventional-changelog-cli "^2.2.2"
 
-"@ken0x0a/configs@^2.8.2":
-  version "2.8.2"
-  resolved "https://registry.yarnpkg.com/@ken0x0a/configs/-/configs-2.8.2.tgz#028283b7bd819475b5091b9f492e4ac4cc985ff8"
-  integrity sha512-ENSp8Z2PEb8yTVNxUGP6taIZ8np7vYBMeojgxj8rwPdx/PTGdhymo7cnDxmNcBJN1sJs96f9u234hmc3z29Sgg==
+"@ken0x0a/configs@^2.8.3":
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/@ken0x0a/configs/-/configs-2.8.3.tgz#2f26f72552735d46810d2666dc4803cadb329f44"
+  integrity sha512-tqot+CwcWkpgmYFE7t/eCcbeNsML1jq6FGH9ifbcHRy3PbM1431EcCTDIRUgFO91cbV5iiPlteDt+UEMyT0aLw==
   dependencies:
     "@ken0x0a/babel" "1.0.8"
     "@ken0x0a/commit-config" "1.3.0"
-    "@ken0x0a/eslint-config" "8.2.2"
+    "@ken0x0a/eslint-config" "8.2.3"
     "@ken0x0a/prettier-config" "4.2.0"
     "@ken0x0a/tsconfig" "3.0.0"
     "@ken0x0a/types" "1.0.7"
@@ -1319,10 +1319,10 @@
     eslint-plugin-react-hooks "^4.6.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@ken0x0a/eslint-config@8.2.2":
-  version "8.2.2"
-  resolved "https://registry.yarnpkg.com/@ken0x0a/eslint-config/-/eslint-config-8.2.2.tgz#8a4ff694f8d0a8a2bc15a9d8555e88abe6e17f94"
-  integrity sha512-lbI3VIl5hchzZ9YaPLoAtHt5kqJuwRsSdAdu6kHAIy6d0BcDykBNlz6XIxWYP/ysD+Gi0f/5gKNv4Wo3i8HF8Q==
+"@ken0x0a/eslint-config@8.2.3":
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/@ken0x0a/eslint-config/-/eslint-config-8.2.3.tgz#5d8863051ba556c44d6593147df240843936b348"
+  integrity sha512-lwn03H5UNuf8bLJrlgcS+G8nFD5SdkRdNDC/CNb6of6VZ1iKeNqNdc/CcVnzNdA/zihUp/Vt/Cx+1WM04n4xvQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^5.42.1"
     "@typescript-eslint/eslint-plugin-tslint" "^5.42.1"
@@ -4105,9 +4105,9 @@ hosted-git-info@^5.0.0, hosted-git-info@^5.2.1:
     lru-cache "^7.5.1"
 
 http-cache-semantics@^4.0.0, http-cache-semantics@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.0.tgz#49e91c5cbf36c9b94bcfcd71c23d5249ec74e390"
-  integrity sha512-carPklcUh7ROWRK7Cv27RPtdhYhUsela/ue5/jKzjegVvXDqM2ILE9Q2BGn9JZJh1g87cp56su/FgQSzcWS8cQ==
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/http-cache-semantics/-/http-cache-semantics-4.1.1.tgz#abe02fcb2985460bf0323be664436ec3476a6d5a"
+  integrity sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==
 
 http-proxy-agent@^5.0.0:
   version "5.0.0"
