@@ -28,16 +28,17 @@ simple loop animation
 value will be looped from `min(default 0)` to `max(default 1)`
 
 ```tsx
+import { interpolate } from 'react-native-reanimated'
 import { useLoop } from 'react-native-reanimated-hooks'
 
 export const Example: React.FC<ExampleProps> = () => {
   const loop = useLoop()
 
-  const circleStyle = useMemo(() => {
-    const size = interpolate(loop.position, { inputRange: [0, 1], outputRange: [20, 70] })
+  const animatedStyle = useAnimatedStyle(() => {
+    const size = interpolate(loop.value.value, [0, 1], [20, 70] )
 
     return { width: size, height: size, backgroundColor: 'pink', borderRadius: size }
-  }, [loop.position])
+  }, [loop.value])
 
   return (
     <View style={styles.container}>
@@ -45,7 +46,7 @@ export const Example: React.FC<ExampleProps> = () => {
         onPress={loop.toggle} // onPress={() => (loop.isAnimating.current ? loop.stop() : loop.start())}
         style={styles.rect}
       >
-        <Animated.View style={rectStyle} />
+        <Animated.View style={animatedStyle} />
       </TouchableOpacity>
     </View>
   )
