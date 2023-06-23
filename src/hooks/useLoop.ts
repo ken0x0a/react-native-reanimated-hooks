@@ -1,142 +1,82 @@
-import { useCallback, useMemo, useRef } from "react";
-import Animated, {
-  EasingNode as Easing,
-  cond,
-  eq,
-  and,
-  block,
-  set,
-  clockRunning,
-  Clock,
-  Value,
-  timing,
-  useCode,
-} from "react-native-reanimated";
-import { ReanimatedLoopState as LoopState } from "../enums";
-import { pauseTiming, resumeTiming } from "../utils/timing";
+import { useMemo, useRef } from "react";
+import type Animated from "react-native-reanimated";
+import { Easing, cancelAnimation, runOnJS, useSharedValue, withTiming } from "react-native-reanimated";
 
-export interface UseLoopResult {
-  clock: Animated.Clock;
-  isAnimating: {
-    current: boolean;
-  };
-  position: Animated.Value<number>;
-  start: () => void;
-  stop: () => void;
-}
-export interface UseLoopOptions {
-  animating?: Animated.Value<LoopState>;
-  easing?: Animated.EasingNodeFunction;
+export type UseLoopResult = {
+  readonly value: Animated.SharedValue<number>;
+  readonly start: () => void;
+  readonly stop: () => void;
+};
+
+export type UseLoopOptions = {
+  animating?: boolean;
+  easing?: Animated.EasingFunction;
   interval?: number;
   max?: number;
   min?: number;
   /**
-   * UseLoopOptions['position']
-   * `position` for `animation.state`
+   * UseLoopOptions['value']
+   * `value` for `animation.state`
    */
-  position?: Animated.Value<number>;
-}
+  // value?: Animated.SharedValue<number>;
+};
+
 export const useLoop = ({
-  animating,
+  animating = true,
   interval = 1000,
   easing = Easing.linear,
+  // value: position,
   min = 0,
   max = 1,
-  position,
 }: UseLoopOptions = {}): UseLoopResult => {
-  const [animation, loopAnimation] = useMemo(() => {
-    const isAnimatingAnimVal = animating || new Value<LoopState>(1);
-    const isAnimating = { current: true };
+  // const value = position !== undefined ? position : useSharedValue(min);
+  const value = useSharedValue(min);
+  const nextInterval = useSharedValue(min);
+  const isAnimating = useRef(animating);
+  // useDerivedValue()
 
-    const state = {
-      finished: new Value(0),
-      position: position || new Value<number>(min),
-      time: new Value(0),
-      frameTime: new Value(0),
-    };
+  const animation = useMemo(() => {
+    // const state = {
+    //   nextDuration: interval,
+    // };
+    nextInterval.value = interval;
 
-    const reset = [
-      set(state.finished, 0),
-      set(state.time, 0),
-      set(state.frameTime, 0),
-      set(state.position, min),
-    ];
-    const config = {
-      toValue: new Value(max),
-      duration: interval,
-      easing,
-    };
+    function run() {
+      "worklet";
 
-    const clock = new Clock();
-
-    const _loopAnimation = () =>
-      block([
-        cond(and(state.finished, eq(state.position, max)), reset),
-        cond(
-          clockRunning(clock),
-          cond(isAnimatingAnimVal, 0, pauseTiming(clock, state, config)),
-          cond(isAnimatingAnimVal, resumeTiming(clock, state, config, max)),
-        ),
-        timing(clock, state, config),
-      ]);
-
-    /**
-     * MAY BE REMOVED (split to another utility function) IN FUTURE `start`, `stop`, `toggle`, `isAnimating`
-     */
-    const start = () => {
-      isAnimatingAnimVal.setValue(LoopState.animate);
+      value.value = withTiming(max, { duration: nextInterval.value, easing }, (finished) => {
+        if (finished) {
+          value.value = min;
+          nextInterval.value = interval;
+          run();
+        } // eslint-disable-line @typescript-eslint/brace-style
+        // change `nextInterval` based on `value.value` position
+        else {
+          nextInterval.value = (interval * (max - value.value)) / (max - min);
+          // console.debug("[reanimated-hooks] useLoop() run() value.value", nextInterval.value);
+        }
+      });
+    }
+    function start() {
+      // console.debug("[reanimated-hooks] useLoop() start()");
+      // console.debug("[state]", nextInterval.value);
       isAnimating.current = true;
-    };
+      // runOnUI(run)();
+      runOnJS(run)();
+    }
 
     const stop = () => {
-      isAnimatingAnimVal.setValue(LoopState.pause);
+      // console.debug("[reanimated-hooks] useLoop() stop()");
       isAnimating.current = false;
+      cancelAnimation(value);
     };
 
-    const toggle = () => (isAnimating.current ? stop() : start());
-    /* eslint-enable @typescript-eslint/explicit-function-return-type */
+    if (isAnimating.current) {
+      start();
+    }
 
-    return [{ start, stop, toggle, position: state.position, clock, isAnimating }, _loopAnimation];
-  }, [animating, interval, easing, min, max, position]);
-
-  useCode(loopAnimation, [loopAnimation]);
+    return { value, start, stop /* , isAnimating */ }; // `isAnimating` never get updated somehow...
+  }, [animating, interval, easing, min, max, value]);
 
   return animation;
 };
-
-type UseLoopStateResult = {
-  start: () => void;
-  state: Animated.Value<LoopState>;
-  stop: () => void;
-  toggle: () => void;
-};
-interface UseLoopStateOptions {
-  state?: LoopState;
-}
-export function useLoopState({ state = LoopState.animate }: UseLoopStateOptions = {}): UseLoopStateResult {
-  const animRef = useRef({
-    isAnimating: state === LoopState.animate,
-    animValue: new Animated.Value<LoopState>(state),
-  });
-
-  const toggle = useCallback(() => {
-    if (animRef.current.isAnimating) {
-      animRef.current.animValue.setValue(LoopState.pause);
-      animRef.current.isAnimating = false;
-    } else {
-      animRef.current.animValue.setValue(LoopState.animate);
-      animRef.current.isAnimating = true;
-    }
-  }, []);
-  const start = useCallback(() => {
-    animRef.current.animValue.setValue(LoopState.animate);
-    animRef.current.isAnimating = true;
-  }, []);
-
-  const stop = useCallback(() => {
-    animRef.current.animValue.setValue(LoopState.pause);
-    animRef.current.isAnimating = false;
-  }, []);
-
-  return { state: animRef.current.animValue, toggle, stop, start };
-}
