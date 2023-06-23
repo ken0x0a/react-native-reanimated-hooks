@@ -3,6 +3,21 @@
 
 react hooks for "react-native-reanimated"
 
+<p align="center">
+<img src="docs/assets/example.gif" width="300" />
+</p>
+
+<sup align="center">
+
+The code for this example is [here](#example).
+
+</sup>
+
+
+- [Install](#install)
+- [Usage](#usage)
+  - [useLoop()](#useloop)
+- [Example](#example)
 
 ## Install
 
@@ -11,15 +26,6 @@ yarn add react-native-reanimated-indicators
 ```
 
 ## Usage
-
-### Examples
-
-- https://github.com/ken0x0a/react-native-reanimated-indicators
-
-```tsx
-```
-
-## Utils
 
 ### useLoop()
 
@@ -64,7 +70,71 @@ The loop is the following
 Loop animated values as indicated by name.
 Just work as expected.
 
-### ~~useSwitch~~
+## Example
 
-not works yet.
+An example with [react-native-reanimated-indicators](https://github.com/ken0x0a/react-native-reanimated-indicators)
 
+```tsx
+import React, { useMemo, useRef } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import Animated, { interpolate, useAnimatedStyle } from "react-native-reanimated";
+import { useLoop } from "react-native-reanimated-hooks";
+import { BallIndicator, DotIndicator } from "react-native-reanimated-indicators";
+
+export const IndicatorScreen: React.FC = () => {
+  const loop = useLoop();
+  const rectStyle = useAnimatedStyle(() => {
+    const size = interpolate(loop.value.value, [0, 1], [20, 70]);
+
+    return { width: size, height: size, backgroundColor: "pink", borderRadius: size };
+  }, [loop.value]);
+
+  const isAnimating = useRef(true);
+  return (
+    <View style={styles.container}>
+      <Text>IndicatorScreen</Text>
+      <TouchableOpacity
+        onPress={() => {
+          if (isAnimating.current) {
+            isAnimating.current = false;
+            loop.stop();
+          } else {
+            isAnimating.current = true;
+            loop.start();
+          }
+        }}
+        style={styles.rect}
+      >
+        <Animated.View style={rectStyle} />
+      </TouchableOpacity>
+      <View style={styles.indicator}>
+        <DotIndicator color="pink" interval={1400} />
+        <DotIndicator color="pink" />
+        <DotIndicator color="pink" scaleEnabled={true} />
+      </View>
+      <View style={styles.indicator}>
+        <BallIndicator color="pink" dotSize={4} size={30} />
+        <BallIndicator color="pink" />
+        <BallIndicator color="pink" dotSize={14} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  rect: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  indicator: {
+    flex: 1,
+    flexDirection: "row",
+  },
+});
+```
